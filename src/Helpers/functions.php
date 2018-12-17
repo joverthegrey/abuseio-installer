@@ -24,7 +24,7 @@ if ( ! function_exists('isActive'))
 if ( ! function_exists('isInstalled'))
 {
     /**
-     * Check if the application is already installed
+     * Check if the Laravel App is installed
      *
      * @return bool
      */
@@ -33,4 +33,3 @@ if ( ! function_exists('isInstalled'))
         return file_exists(storage_path('installed'));
     }
 }
-
