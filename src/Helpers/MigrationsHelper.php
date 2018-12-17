@@ -1,6 +1,6 @@
 <?php
 
-namespace RachidLaasri\LaravelInstaller\Helpers;
+namespace AbuseIO\AbuseIOInstaller\Helpers;
 use Illuminate\Support\Facades\DB;
 
 trait MigrationsHelper {

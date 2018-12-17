@@ -1,6 +1,6 @@
 <?php
 
-namespace RachidLaasri\LaravelInstaller\Controllers;
+namespace AbuseIO\AbuseIOInstaller\Controllers;
 
 use Illuminate\Routing\Controller;
 

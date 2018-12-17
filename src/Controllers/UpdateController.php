@@ -1,14 +1,14 @@
 <?php
 
-namespace RachidLaasri\LaravelInstaller\Controllers;
+namespace AbuseIO\AbuseIOInstaller\Controllers;
 
 use Illuminate\Routing\Controller;
-use RachidLaasri\LaravelInstaller\Helpers\InstalledFileManager;
-use RachidLaasri\LaravelInstaller\Helpers\DatabaseManager;
+use AbuseIO\AbuseIOInstaller\Helpers\InstalledFileManager;
+use AbuseIO\AbuseIOInstaller\Helpers\DatabaseManager;
 
 class UpdateController extends Controller
 {
-    use \RachidLaasri\LaravelInstaller\Helpers\MigrationsHelper;
+    use \AbuseIO\AbuseIOInstaller\Helpers\MigrationsHelper;
 
     /**
      * Display the updater welcome page.

@@ -1,6 +1,6 @@
 {
-    "name": "rachidlaasri/laravel-installer",
-    "description": "Laravel web installer",
+    "name": "AbuseIO/abuseio-installer",
+    "description": "AbuseIO web installer",
     "license": "MIT",
     "authors": [
         {
@@ -10,6 +10,10 @@
         {
             "name": "Jeremy Kenedy",
             "email": "jeremykenedy@gmail.com"
+        },
+        {
+            "name": "Joost Vermeulen",
+            "email": "joost@abuse.io"
         }
     ],
     "require": {
@@ -17,7 +21,7 @@
     },
     "autoload": {
         "psr-4": {
-            "RachidLaasri\\LaravelInstaller\\": "src/"
+            "AbuseIO\\AbuseIOInstaller\\": "src/"
         },
         "files": [
             "src/Helpers/functions.php"
@@ -26,7 +30,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "RachidLaasri\\LaravelInstaller\\Providers\\LaravelInstallerServiceProvider"
+                "AbuseIO\\AbuseIOInstaller\\Providers\\LaravelInstallerServiceProvider"
             ]
         }
     },
