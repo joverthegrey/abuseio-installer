@@ -14,14 +14,14 @@ class Installer
     /**
      * @return bool
      */
-    public function installed() {
+    public static function installed() {
         return isInstalled();
     }
 
     /**
      * @return bool
      */
-    public function updated() {
+    public static function updated() {
         //todo
         return false;
     }
