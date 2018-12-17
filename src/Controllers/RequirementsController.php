@@ -1,9 +1,9 @@
 <?php
 
-namespace RachidLaasri\LaravelInstaller\Controllers;
+namespace AbuseIO\AbuseIOInstaller\Controllers;
 
 use Illuminate\Routing\Controller;
-use RachidLaasri\LaravelInstaller\Helpers\RequirementsChecker;
+use AbuseIO\AbuseIOInstaller\Helpers\RequirementsChecker;
 
 class RequirementsController extends Controller
 {

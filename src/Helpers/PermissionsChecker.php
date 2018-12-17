@@ -1,6 +1,6 @@
 <?php
 
-namespace RachidLaasri\LaravelInstaller\Helpers;
+namespace AbuseIO\AbuseIOInstaller\Helpers;
 
 class PermissionsChecker
 {

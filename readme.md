@@ -50,7 +50,7 @@ Register the package with laravel in `config/app.php` under `providers` with the
 
 ```php
 	'providers' => [
-	    RachidLaasri\LaravelInstaller\Providers\LaravelInstallerServiceProvider::class,
+	    AbuseIO\AbuseIOInstaller\Providers\LaravelInstallerServiceProvider::class,
 	];
 ```
 

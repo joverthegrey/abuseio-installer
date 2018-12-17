@@ -1,12 +1,12 @@
 <?php
 
-namespace RachidLaasri\LaravelInstaller\Controllers;
+namespace AbuseIO\AbuseIOInstaller\Controllers;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
-use RachidLaasri\LaravelInstaller\Helpers\EnvironmentManager;
-use RachidLaasri\LaravelInstaller\Events\EnvironmentSaved;
+use AbuseIO\AbuseIOInstaller\Helpers\EnvironmentManager;
+use AbuseIO\AbuseIOInstaller\Events\EnvironmentSaved;
 use Validator;
 
 class EnvironmentController extends Controller
