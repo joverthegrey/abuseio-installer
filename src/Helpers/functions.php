@@ -20,3 +20,16 @@ if ( ! function_exists('isActive'))
         if (strpos(URL::current(), $route)) return $className;
     }
 }
+
+if ( ! function_exists('isInstalled'))
+{
+    /**
+     * Check if the Laravel App is installed
+     *
+     * @return bool
+     */
+    function isInstalled()
+    {
+        return file_exists(storage_path('installed'));
+    }
+}

@@ -55,6 +55,6 @@ class canInstall
      */
     public function alreadyInstalled()
     {
-        return file_exists(storage_path('installed'));
+        return isInstalled();
     }
 }
