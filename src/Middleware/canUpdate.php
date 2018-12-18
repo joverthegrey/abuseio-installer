@@ -20,11 +20,10 @@ class canUpdate
         $updateEnabled = filter_var(config('installer.updaterEnabled'), FILTER_VALIDATE_BOOLEAN);
         switch ($updateEnabled) {
             case true:
-                $canInstall = new canInstall;
 
                 // if the application has not been installed,
                 // redirect to the installer
-                if (!$canInstall->alreadyInstalled()) {
+                if (!isInstalled()) {
                     return redirect()->route('LaravelInstaller::welcome');
                 }
 
