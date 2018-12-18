@@ -17,7 +17,7 @@ class canInstall
      */
     public function handle($request, Closure $next)
     {
-        if($this->alreadyInstalled()) {
+        if(isInstalled()) {
 
             $installedRedirect = config('installer.installedAlreadyAction');
 
@@ -46,15 +46,5 @@ class canInstall
             }
         }
         return $next($request);
-    }
-
-    /**
-     * If application is already installed.
-     *
-     * @return bool
-     */
-    public function alreadyInstalled()
-    {
-        return file_exists(storage_path('installed'));
     }
 }
