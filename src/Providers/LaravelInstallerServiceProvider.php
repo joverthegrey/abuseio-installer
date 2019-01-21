@@ -6,6 +6,7 @@ use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 use AbuseIO\AbuseIOInstaller\Middleware\canInstall;
 use AbuseIO\AbuseIOInstaller\Middleware\canUpdate;
+use Route;
 
 class LaravelInstallerServiceProvider extends ServiceProvider
 {
@@ -34,8 +35,8 @@ class LaravelInstallerServiceProvider extends ServiceProvider
      */
     public function boot(Router $router)
     {
-        $router->middlewareGroup('install',[CanInstall::class]);
-        $router->middlewareGroup('update',[CanUpdate::class]);
+        $router->middleware('install',CanInstall::class);
+        $router->middleware('update',CanUpdate::class);
     }
 
     /**
@@ -60,5 +61,16 @@ class LaravelInstallerServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../Lang' => base_path('resources/lang'),
         ], 'laravelinstaller');
+    }
+
+    /**
+     * Load the standard routes file for the application.
+     *
+     * @param  string  $path
+     * @return mixed
+     */
+    protected function loadRoutesFrom($path)
+    {
+        require $path;
     }
 }

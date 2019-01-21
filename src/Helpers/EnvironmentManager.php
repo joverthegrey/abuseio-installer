@@ -28,20 +28,24 @@ class EnvironmentManager
 
     /**
      * Get the content of the .env file.
+     * If the .env doesn't exist, create it and return the empty file.
      *
+     * @param bool $example
+     *   use the example env file
      * @return string
      */
-    public function getEnvContent()
+    public function getEnvContent($example = false)
     {
-        if (!file_exists($this->envPath)) {
-            if (file_exists($this->envExamplePath)) {
-                copy($this->envExamplePath, $this->envPath);
-            } else {
-                touch($this->envPath);
-            }
+        $filePath = $this->envPath;
+        if ($example) {
+            $filePath = $this->envExamplePath;
         }
 
-        return file_get_contents($this->envPath);
+        if (!file_exists($filePath)) {
+            touch($this->envPath);
+        }
+
+        return file_get_contents($filePath);
     }
 
     /**
@@ -87,6 +91,7 @@ class EnvironmentManager
      *
      * @param Request $request
      * @return string
+     * @throws Exception
      */
     public function saveFileWizard(Request $request)
     {
@@ -95,10 +100,11 @@ class EnvironmentManager
         $envFileData =
         'APP_NAME=\'' . $request->app_name . "'\n" .
         'APP_ENV=' . $request->environment . "\n" .
-        'APP_KEY=' . 'base64:bODi8VtmENqnjklBmNJzQcTTSC8jNjBysfnjQN59btE=' . "\n" .
+        'APP_KEY=' . bin2hex(random_bytes(16)) . "\n" .
         'APP_DEBUG=' . $request->app_debug . "\n" .
         'APP_LOG_LEVEL=' . $request->app_log_level . "\n" .
-        'APP_URL=' . $request->app_url . "\n\n" .
+        'APP_URL=' . $request->app_url . "\n" .
+        "APP_INSTALLED=true\n\n" .
         'DB_CONNECTION=' . $request->database_connection . "\n" .
         'DB_HOST=' . $request->database_hostname . "\n" .
         'DB_PORT=' . $request->database_port . "\n" .

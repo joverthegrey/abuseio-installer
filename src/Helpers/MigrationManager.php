@@ -8,15 +8,27 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\Console\Output\BufferedOutput;
+use Log;
 
-class DatabaseManager
+class MigrationManager
 {
     /**
-     * Migrate and seed the database.
+     * MigrationManager constructor.
+     */
+    public function __construct()
+    {
+        // if not defined (include the base_path() for the binary)
+        if (!defined('ARTISAN_BINARY')) {
+            define('ARTISAN_BINARY', base_path() . '/artisan');
+        }
+    }
+
+    /**
+     * Starts the migration background process.
      *
      * @return array
      */
-    public function migrateAndSeed()
+    public function startMigration()
     {
         $outputLog = new BufferedOutput;
 
@@ -26,21 +38,39 @@ class DatabaseManager
     }
 
     /**
-     * Run the migration and call the seeder.
+     * Starts the seeded background process.
+     *
+     * @return array
+     */
+    public function startSeeding()
+    {
+        $outputLog = new BufferedOutput;
+
+        $this->sqlite($outputLog);
+
+        return $this->migrate($outputLog);
+    }
+
+    /**
+     * Run the migration.
      *
      * @param \Symfony\Component\Console\Output\BufferedOutput $outputLog
      * @return array
      */
     private function migrate(BufferedOutput $outputLog)
     {
+
+        $migratedFile = storage_path() . '/migrated';
         try{
-            Artisan::call('migrate', ["--force"=> true], $outputLog);
+            Log::debug('Starting migrations');
+            call_in_background('migrate --force', null, 'touch ' . $migratedFile);
         }
         catch(Exception $e){
             return $this->response($e->getMessage(), 'error', $outputLog);
         }
 
-        return $this->seed($outputLog);
+        // todo translation
+        return $this->response('starting migration', 'success', $outputLog);
     }
 
     /**
@@ -51,14 +81,17 @@ class DatabaseManager
      */
     private function seed(BufferedOutput $outputLog)
     {
+        $seededFile = storage_path() . '/seeded';
         try{
-            Artisan::call('db:seed', ['--force' => true], $outputLog);
+            Log::debug('Starting seeding');
+            call_in_background('db:seed --force', 'touch ' . $seededFile);
         }
         catch(Exception $e){
             return $this->response($e->getMessage(), 'error', $outputLog);
         }
 
-        return $this->response(trans('installer_messages.final.finished'), 'success', $outputLog);
+        // todo translation
+        return $this->response('starting seeding', 'success', $outputLog);
     }
 
     /**

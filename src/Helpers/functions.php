@@ -33,3 +33,17 @@ if ( ! function_exists('isInstalled'))
         return file_exists(storage_path('installed'));
     }
 }
+
+if ( ! function_exists('isMigrated'))
+{
+    /**
+     * Check if the Laravel App is migrated
+     *
+     * @return bool
+     */
+    function isMigrated()
+    {
+        return file_exists(storage_path('migrated'));
+    }
+}
+

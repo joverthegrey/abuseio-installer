@@ -7,7 +7,7 @@ return [
      * Shared translations.
      *
      */
-    'title' => 'Laravel Installer',
+    'title' => 'AbuseIO Installer',
     'next' => 'Volgende stap',
 
 
@@ -62,7 +62,7 @@ return [
      */
     'final' => [
         'title' => 'Voltooid',
-        'finished' => 'Applicatie is succesvol geïnstalleerd.',
+        'finished' => 'AbuseIO is succesvol geïnstalleerd.',
         'exit' => 'Klik hier om af te sluiten.',
     ],
 ];

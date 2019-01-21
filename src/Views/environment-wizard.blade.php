@@ -33,6 +33,13 @@
             {{ trans('installer_messages.environment.wizard.tabs.application') }}
         </label>
 
+        <input id="tab4" type="radio" name="tabs" class="tab-input" />
+        <label for="tab4" class="tab-label">
+            <i class="fa fa-user-circle fa-2x fa-fw" aria-hidden="true"></i>
+            <br />
+            {{ trans('installer_messages.environment.wizard.tabs.admin') }}
+        </label>
+
         <form method="post" action="{{ route('LaravelInstaller::environmentSaveWizard') }}" class="tabs-wrap">
             <div class="tab" id="tab1content">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -118,7 +125,7 @@
                     <label for="app_url">
                         {{ trans('installer_messages.environment.wizard.form.app_url_label') }}
                     </label>
-                    <input type="url" name="app_url" id="app_url" value="http://localhost" placeholder="{{ trans('installer_messages.environment.wizard.form.app_url_placeholder') }}" />
+                    <input type="url" name="app_url" id="app_url" value="{{ $app_url }}" placeholder="{{ trans('installer_messages.environment.wizard.form.app_url_placeholder') }}" />
                     @if ($errors->has('app_url'))
                         <span class="error-block">
                             <i class="fa fa-fw fa-exclamation-triangle" aria-hidden="true"></i>
@@ -492,6 +499,58 @@
                     </div>
                 </div>
                 <div class="buttons">
+                    <button class="button" onclick="showAdminSettings();return false">
+                        {{ trans('installer_messages.environment.wizard.form.buttons.setup_admin') }}
+                        <i class="fa fa-angle-right fa-fw" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="tab" id="tab4content">
+
+                <div class="form-group {{ $errors->has('admin_email') ? ' has-error ' : '' }}">
+                    <label for="admin_email">
+                        {{ trans('installer_messages.environment.wizard.form.admin_email') }}
+                    </label>
+                    <input type="text" name="admin_email" id="admin_email" value="{{ trans('installer_messages.environment.wizard.form.admin_email_default') }}" />
+
+                    @if ($errors->has('admin_email'))
+                        <span class="error-block">
+                            <i class="fa fa-fw fa-exclamation-triangle" aria-hidden="true"></i>
+                            {{ $errors->first('admin_email') }}
+                        </span>
+                    @endif
+                </div>
+
+                <div class="form-group {{ $errors->has('admin_password') ? ' has-error ' : '' }}">
+                    <label for="admin_password">
+                        {{ trans('installer_messages.environment.wizard.form.admin_password') }}
+                    </label>
+                    <input type="password" name="admin_password" id="admin_password" placeholder="{{ trans('installer_messages.environment.wizard.form.admin_password_placeholder') }}" />
+
+                    @if ($errors->has('admin_password'))
+                        <span class="error-block">
+                            <i class="fa fa-fw fa-exclamation-triangle" aria-hidden="true"></i>
+                            {{ $errors->first('admin_password') }}
+                        </span>
+                    @endif
+                </div>
+
+                <div class="form-group {{ $errors->has('admin_password2') ? ' has-error ' : '' }}">
+                    <label for="admin_password2">
+                        {{ trans('installer_messages.environment.wizard.form.admin_password_repeat') }}
+                    </label>
+                    <input type="password" name="admin_password2" id="admin_password2" placeholder="{{ trans('installer_messages.environment.wizard.form.admin_password_placeholder') }}" />
+
+                    @if ($errors->has('admin_password'))
+                        <span class="error-block">
+                            <i class="fa fa-fw fa-exclamation-triangle" aria-hidden="true"></i>
+                            {{ $errors->first('admin_password') }}
+                        </span>
+                    @endif
+                </div>
+
+                <div class="buttons">
                     <button class="button" type="submit">
                         {{ trans('installer_messages.environment.wizard.form.buttons.install') }}
                         <i class="fa fa-angle-right fa-fw" aria-hidden="true"></i>
@@ -518,6 +577,9 @@
         }
         function showApplicationSettings() {
             document.getElementById('tab3').checked = true;
+        }
+        function showAdminSettings() {
+            document.getElementById('tab4').checked = true;
         }
     </script>
 @endsection

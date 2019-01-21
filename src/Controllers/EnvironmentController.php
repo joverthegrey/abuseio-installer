@@ -29,11 +29,12 @@ class EnvironmentController extends Controller
     /**
      * Display the Environment menu page.
      *
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function environmentMenu()
     {
-        return view('vendor.installer.environment');
+        // force the wizard
+        return redirect()->route('LaravelInstaller::environmentWizard');
     }
 
     /**
@@ -45,36 +46,11 @@ class EnvironmentController extends Controller
     {
         $envConfig = $this->EnvironmentManager->getEnvContent();
 
-        return view('vendor.installer.environment-wizard', compact('envConfig'));
-    }
-
-    /**
-     * Display the Environment page.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function environmentClassic()
-    {
-        $envConfig = $this->EnvironmentManager->getEnvContent();
-
-        return view('vendor.installer.environment-classic', compact('envConfig'));
-    }
-
-    /**
-     * Processes the newly saved environment configuration (Classic).
-     *
-     * @param Request $input
-     * @param Redirector $redirect
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function saveClassic(Request $input, Redirector $redirect)
-    {
-        $message = $this->EnvironmentManager->saveFileClassic($input);
-
-        event(new EnvironmentSaved($input));
-
-        return $redirect->route('LaravelInstaller::environmentClassic')
-                        ->with(['message' => $message]);
+        return view('vendor.installer.environment-wizard',
+            [
+                'envConfig' => $envConfig,
+                'app_url' => \Request::getSchemeAndHttpHost()
+            ]);
     }
 
     /**
@@ -107,7 +83,7 @@ class EnvironmentController extends Controller
 
         event(new EnvironmentSaved($request));
 
-        return $redirect->route('LaravelInstaller::database')
+        return $redirect->route('LaravelInstaller::migrate')
                         ->with(['results' => $results]);
     }
 

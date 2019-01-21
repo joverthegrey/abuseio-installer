@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['prefix' => 'install','as' => 'LaravelInstaller::','namespace' => 'AbuseIO\AbuseIOInstaller\Controllers','middleware' => ['web', 'install']], function() {
+Route::group(['prefix' => 'install','as' => 'LaravelInstaller::','namespace' => 'AbuseIO\AbuseIOInstaller\Controllers','middleware' => ['install']], function() {
     Route::get('/', [
         'as' => 'welcome',
         'uses' => 'WelcomeController@welcome'
@@ -21,16 +21,6 @@ Route::group(['prefix' => 'install','as' => 'LaravelInstaller::','namespace' => 
         'uses' => 'EnvironmentController@saveWizard'
     ]);
 
-    Route::get('environment/classic', [
-        'as' => 'environmentClassic',
-        'uses' => 'EnvironmentController@environmentClassic'
-    ]);
-
-    Route::post('environment/saveClassic', [
-        'as' => 'environmentSaveClassic',
-        'uses' => 'EnvironmentController@saveClassic'
-    ]);
-
     Route::get('requirements', [
         'as' => 'requirements',
         'uses' => 'RequirementsController@requirements'
@@ -46,6 +36,17 @@ Route::group(['prefix' => 'install','as' => 'LaravelInstaller::','namespace' => 
         'uses' => 'DatabaseController@database'
     ]);
 
+    Route::get('migrate', [
+        'as' => 'migrate',
+        'uses' => 'MigrationController@migrate'
+    ]);
+
+    Route::get('seed', [
+        'as' => 'seed',
+        'uses' => 'MigrationController@seed'
+    ]);
+
+
     Route::get('final', [
         'as' => 'final',
         'uses' => 'FinalController@finish'
@@ -53,7 +54,7 @@ Route::group(['prefix' => 'install','as' => 'LaravelInstaller::','namespace' => 
 
 });
 
-Route::group(['prefix' => 'update','as' => 'LaravelUpdater::','namespace' => 'AbuseIO\AbuseIOInstaller\Controllers','middleware' => 'web'],function() {
+Route::group(['prefix' => 'update','as' => 'LaravelUpdater::','namespace' => 'AbuseIO\AbuseIOInstaller\Controllers'],function() {
     Route::group(['middleware' => 'update'], function() {
 
         Route::get('/', [

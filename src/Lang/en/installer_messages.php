@@ -7,7 +7,7 @@ return [
      * Shared translations.
      *
      */
-    'title' => 'Laravel Installer',
+    'title' => 'AbuseIO Installer',
     'next' => 'Next Step',
     'back' => 'Previous',
     'finish' => 'Install',
@@ -22,8 +22,8 @@ return [
      */
     'welcome' => [
         'templateTitle' => 'Welcome',
-        'title'   => 'Laravel Installer',
-        'message' => 'Easy Installation and Setup Wizard.',
+        'title'   => 'AbuseIO Installer',
+        'message' => 'Setup Wizard.',
         'next'    => 'Check Requirements',
     ],
 
@@ -68,7 +68,8 @@ return [
             'tabs' => [
                 'environment' => 'Environment',
                 'database' => 'Database',
-                'application' => 'Application'
+                'application' => 'Application',
+                'admin' => 'Administrator'
             ],
             'form' => [
                 'name_required' => 'An environment name is required.',
@@ -111,6 +112,11 @@ return [
                 'db_username_placeholder' => 'Database User Name',
                 'db_password_label' => 'Database Password',
                 'db_password_placeholder' => 'Database Password',
+                'admin_email' => 'Administrator e-mail',
+                'admin_email_default' => 'admin@isp.local',
+                'admin_password' => 'Administrator Password',
+                'admin_password_placeholder' => '********',
+                'admin_password_repeat' => 'Repeat Password',
 
                 'app_tabs' => [
                     'more_info' => 'More Info',
@@ -153,6 +159,7 @@ return [
                 'buttons' => [
                     'setup_database' => 'Setup Database',
                     'setup_application' => 'Setup Application',
+                    'setup_admin' => 'Setup Administrator',
                     'install' => 'Install',
                 ],
             ],
@@ -176,8 +183,21 @@ return [
      *
      */
     'installed' => [
-        'success_log_message' => 'Laravel Installer successfully INSTALLED on ',
+        'success_log_message' => 'AbuseIO Installer successfully INSTALLED on ',
     ],
+
+    /**
+     * Migration page translations
+     */
+    'migrate' => [
+        'title' => 'Migrating',
+        'templateTitle' => 'Migrating',
+        'migrating' => 'Migrating...',
+        'seeding' => 'Seeding the database...',
+        'adding' => 'Adding admin account...',
+        'finished' => 'Finished',
+    ],
+
 
     /**
      *
@@ -187,9 +207,9 @@ return [
     'final' => [
         'title' => 'Installation Finished',
         'templateTitle' => 'Installation Finished',
-        'finished' => 'Application has been successfully installed.',
+        'finished' => 'AbuseIO has been successfully installed.',
         'migration' => 'Migration &amp; Seed Console Output:',
-        'console' => 'Application Console Output:',
+        'console' => 'AbuseIO Console Output:',
         'log' => 'Installation Log Entry:',
         'env' => 'Final .env File:',
         'exit' => 'Click here to exit',
@@ -206,7 +226,7 @@ return [
          * Shared translations.
          *
          */
-        'title' => 'Laravel Updater',
+        'title' => 'AbuseIO Updater',
 
         /**
          *
@@ -236,12 +256,12 @@ return [
          */
         'final' => [
             'title' => 'Finished',
-            'finished' => 'Application\'s database has been successfully updated.',
+            'finished' => 'AbuseIO\'s database has been successfully updated.',
             'exit' => 'Click here to exit',
         ],
 
         'log' => [
-            'success_message' => 'Laravel Installer successfully UPDATED on ',
+            'success_message' => 'AbuseIO Installer successfully UPDATED on ',
         ],
     ],
 ];

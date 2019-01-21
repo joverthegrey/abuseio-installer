@@ -4,12 +4,10 @@ namespace AbuseIO\AbuseIOInstaller\Events;
 
 use Illuminate\Http\Request;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Foundation\Events\Dispatchable;
-use Illuminate\Broadcasting\InteractsWithSockets;
 
 class EnvironmentSaved
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+    use SerializesModels;
 
     private $request;
 

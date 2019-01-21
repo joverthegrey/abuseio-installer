@@ -3,12 +3,10 @@
 namespace AbuseIO\AbuseIOInstaller\Events;
 
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Foundation\Events\Dispatchable;
-use Illuminate\Broadcasting\InteractsWithSockets;
 
 class LaravelInstallerFinished
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+    use SerializesModels;
 
     /**
      * Create a new event instance.
