@@ -65,6 +65,9 @@ class MigrationController extends Controller
         return view('vendor.installer.migrate');
     }
 
+    /**
+     * return the status of the installation
+     */
     public function getStatus()
     {
         return response()->json([
