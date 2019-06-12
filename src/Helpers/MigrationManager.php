@@ -48,7 +48,7 @@ class MigrationManager
 
         $this->sqlite($outputLog);
 
-        return $this->migrate($outputLog);
+        return $this->seed($outputLog);
     }
 
     /**
@@ -69,7 +69,6 @@ class MigrationManager
             return $this->response($e->getMessage(), 'error', $outputLog);
         }
 
-        // todo translation
         return $this->response('starting migration', 'success', $outputLog);
     }
 
@@ -84,14 +83,30 @@ class MigrationManager
         $seededFile = storage_path() . '/seeded';
         try{
             Log::debug('Starting seeding');
-            call_in_background('db:seed --force', 'touch ' . $seededFile);
+            call_in_background('db:seed --force', null, 'touch ' . $seededFile);
         }
         catch(Exception $e){
             return $this->response($e->getMessage(), 'error', $outputLog);
         }
 
-        // todo translation
         return $this->response('starting seeding', 'success', $outputLog);
+    }
+
+    /**
+     * Add an administrator
+     */
+    public function addAdmin($email, $password)
+    {
+        $adminFile = storage_path() . '/adminadded';
+        try{
+            Log::debug('Creating admin');
+            // todo
+        }
+        catch(Exception $e){
+            return $this->response($e->getMessage(), 'error', null);
+        }
+
+        return $this->response('starting seeding', 'success', null);
     }
 
     /**
@@ -107,7 +122,7 @@ class MigrationManager
         return [
             'status' => $status,
             'message' => $message,
-            'dbOutputLog' => $outputLog->fetch()
+            'dbOutputLog' => is_null($outputLog) ? null : $outputLog->fetch()
         ];
     }
 

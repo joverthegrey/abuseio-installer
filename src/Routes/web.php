@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['prefix' => 'install','as' => 'LaravelInstaller::','namespace' => 'AbuseIO\AbuseIOInstaller\Controllers','middleware' => ['install']], function() {
+Route::group(['prefix' => 'install','as' => 'LaravelInstaller::','namespace' => 'AbuseIO\AbuseIOInstaller\Controllers','middleware' => ['web']], function() {
     Route::get('/', [
         'as' => 'welcome',
         'uses' => 'WelcomeController@welcome'
@@ -39,6 +39,16 @@ Route::group(['prefix' => 'install','as' => 'LaravelInstaller::','namespace' => 
     Route::get('migrate', [
         'as' => 'migrate',
         'uses' => 'MigrationController@migrate'
+    ]);
+
+    Route::get('add_admin', [
+        'as' => 'add_admin',
+        'uses' => 'MigrationController@addAdmin'
+    ]);
+
+    Route::get('status', [
+        'as' => 'status',
+        'uses' => 'MigrationController@getStatus'
     ]);
 
     Route::get('seed', [

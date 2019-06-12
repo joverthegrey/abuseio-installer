@@ -68,7 +68,7 @@ return [
             'tabs' => [
                 'environment' => 'Environment',
                 'database' => 'Database',
-                'application' => 'Application',
+                'mail' => 'Mail',
                 'admin' => 'Administrator'
             ],
             'form' => [
@@ -77,7 +77,7 @@ return [
                 'app_name_placeholder' => 'App Name',
                 'app_environment_label' => 'App Environment',
                 'app_environment_label_local' => 'Local',
-                'app_environment_label_developement' => 'Development',
+                'app_environment_label_development' => 'Development',
                 'app_environment_label_qa' => 'Qa',
                 'app_environment_label_production' => 'Production',
                 'app_environment_label_other' => 'Other',
@@ -115,8 +115,9 @@ return [
                 'admin_email' => 'Administrator e-mail',
                 'admin_email_default' => 'admin@isp.local',
                 'admin_password' => 'Administrator Password',
-                'admin_password_placeholder' => '********',
+                'admin_password_placeholder' => 'Password',
                 'admin_password_repeat' => 'Repeat Password',
+                'admin_passwords_differ' => 'The passwords differ',
 
                 'app_tabs' => [
                     'more_info' => 'More Info',
@@ -158,7 +159,7 @@ return [
                 ],
                 'buttons' => [
                     'setup_database' => 'Setup Database',
-                    'setup_application' => 'Setup Application',
+                    'setup_mail' => 'Setup Mail',
                     'setup_admin' => 'Setup Administrator',
                     'install' => 'Install',
                 ],
@@ -212,6 +213,7 @@ return [
         'console' => 'AbuseIO Console Output:',
         'log' => 'Installation Log Entry:',
         'env' => 'Final .env File:',
+        'next' => 'Next',
         'exit' => 'Click here to exit',
     ],
 

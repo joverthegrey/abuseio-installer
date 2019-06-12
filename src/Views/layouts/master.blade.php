@@ -17,8 +17,7 @@
             ]); ?>
         </script>
         <script
-                src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-                integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
+                src="https://code.jquery.com/jquery-3.3.1.min.js"
                 crossorigin="anonymous">
         </script>
     </head>
@@ -26,7 +25,7 @@
         <div class="master">
             <div class="box">
                 <div class="header">
-                    <h1 class="header__title">@yield('title')</h1>
+                    <h1 id="header_title" class="header__title">@yield('title')</h1>
                 </div>
                 <ul class="step">
                     <li class="step__divider"></li>
@@ -111,9 +110,11 @@
         <script type="text/javascript">
             var x = document.getElementById('error_alert');
             var y = document.getElementById('close_alert');
-            y.onclick = function() {
-                x.style.display = "none";
-            };
+            if (y && x) {
+                y.onclick = function() {
+                    x.style.display = "none";
+                };
+            }
         </script>
     </body>
 </html>

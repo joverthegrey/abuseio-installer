@@ -47,3 +47,29 @@ if ( ! function_exists('isMigrated'))
     }
 }
 
+if ( ! function_exists('isSeeded'))
+{
+    /**
+     * Check if the Laravel App is seeded
+     *
+     * @return bool
+     */
+    function isSeeded()
+    {
+        return file_exists(storage_path('seeded'));
+    }
+}
+
+if ( ! function_exists('adminAdded'))
+{
+    /**
+     * Check if the admin user is updated
+     *
+     * @return bool
+     */
+    function adminAdded()
+    {
+        return file_exists(storage_path('adminadded'));
+    }
+}
+

@@ -7,6 +7,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\MessageBag;
 use AbuseIO\AbuseIOInstaller\Helpers\EnvironmentManager;
 use AbuseIO\AbuseIOInstaller\Events\EnvironmentSaved;
 use Validator;
@@ -49,7 +50,7 @@ class EnvironmentController extends Controller
         return view('vendor.installer.environment-wizard',
             [
                 'envConfig' => $envConfig,
-                'app_url' => \Request::getSchemeAndHttpHost()
+                'app_url' => \Request::getSchemeAndHttpHost(),
             ]);
     }
 
@@ -60,8 +61,10 @@ class EnvironmentController extends Controller
      * @param Redirector $redirect
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function saveWizard(Request $request, Redirector $redirect)
+    public function saveWizard(Request $request)
     {
+
+        $errors = new MessageBag();
         $rules = config('installer.environment.form.rules');
         $messages = [
             'environment_custom.required_if' => trans('installer_messages.environment.wizard.form.name_required'),
@@ -70,20 +73,35 @@ class EnvironmentController extends Controller
         $validator = Validator::make($request->all(), $rules, $messages);
 
         if ($validator->fails()) {
-            return $redirect->route('LaravelInstaller::environmentWizard')->withInput()->withErrors($validator->errors());
+            $errors = $validator->errors();
         }
 
         if (!$this->checkDatabaseConnection($request)) {
-            return $redirect->route('LaravelInstaller::environmentWizard')->withInput()->withErrors([
-                'database_connection' => trans('installer_messages.environment.wizard.form.db_connection_failed'),
-            ]);
+            $errors = $errors->merge(['database_connection' => trans('installer_messages.environment.wizard.form.db_connection_failed')]);
+        }
+
+        if ($request->input('admin_password') != $request->input('admin_password2')) {
+            $errors = $errors->merge([
+                    'admin_password' => trans('installer_messages.environment.wizard.form.admin_passwords_differ'),
+                    'admin_password2' => trans('installer_messages.environment.wizard.form.admin_passwords_differ'),
+                ]);
+        }
+
+        if ($errors->count() > 0 ) {
+            return redirect()->back()
+                ->withInput()
+                ->withErrors($errors);
         }
 
         $results = $this->EnvironmentManager->saveFileWizard($request);
 
+        // save admin data in session, so we can use it later
+        $request->session()->put('admin_email', $request->input('admin_email'));
+        $request->session()->put('admin_password', $request->input('admin_password'));
+
         event(new EnvironmentSaved($request));
 
-        return $redirect->route('LaravelInstaller::migrate')
+        return redirect()->route('LaravelInstaller::migrate')
                         ->with(['results' => $results]);
     }
 
