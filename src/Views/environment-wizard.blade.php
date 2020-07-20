@@ -58,6 +58,19 @@
                     @endif
                 </div>
 
+                <div class="form-group {{ !empty($errors) && $errors->has('demo_data') ? ' has-error ' : '' }}">
+                    <label for="demo_data">
+                        {{ trans('installer_messages.environment.wizard.form.demo_data_label') }}
+                    </label>
+                    <input type="checkbox" name="demo_data" id="demo_data" @if (old('demo_data')) checked @endif />
+                    @if (!empty($errors) && $errors->has('demo_data'))
+                        <span class="error-block">
+                            <i class="fa fa-fw fa-exclamation-triangle" aria-hidden="true"></i>
+                            {{ $errors->first('demo_data') }}
+                        </span>
+                    @endif
+                </div>
+
                 <div class="form-group {{ !empty($errors) && $errors->has('environment') ? ' has-error ' : '' }}">
                     <label for="environment">
                         {{ trans('installer_messages.environment.wizard.form.app_environment_label') }}
@@ -66,7 +79,7 @@
                         <option value="local"
                                 @if (old('environment') == 'local') selected @endif>{{ trans('installer_messages.environment.wizard.form.app_environment_label_local') }}</option>
                         <option value="development"
-                                @if (old('environment') == 'development') selected @endif>{{ trans('installer_messages.environment.wizard.form.app_environment_label_developement') }}</option>
+                                @if (old('environment') == 'development') selected @endif>{{ trans('installer_messages.environment.wizard.form.app_environment_label_development') }}</option>
                         <option value="production"
                                 @if (old('environment') == 'production') selected @endif>{{ trans('installer_messages.environment.wizard.form.app_environment_label_production') }}</option>
                     </select>

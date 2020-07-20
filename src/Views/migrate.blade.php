@@ -21,6 +21,9 @@
 @section('scripts')
     <script>
         $('#button').hide();
+        var seed = {{ session('seed') ? 1 : 0 }};
+        var status = 'migrating';
+        var timer = setInterval(checkStatus, 5000);
 
         function checkStatus() {
             $.ajax({
@@ -28,8 +31,9 @@
                 url: "/install/status",
                 async: true,
                 success: function(data) {
-                    if (data.migrated && !data.seeded) {
+                    if (data.migrated && !data.seeded && status != 'seeding' && status != 'adding' && seed) {
                         console.log('Migrate succeeded');
+                        status = 'seeding';
                         // migrated and not seeded, fire seed call
                         $('#header_title').text("{{ trans('installer_messages.migrate.seeding') }}");
                         $.ajax({
@@ -40,17 +44,29 @@
                                 console.log('Seed succeeded');
                             }
                         });
-                    } else if (data.migrated && data.seeded) {
+                    } else if (data.migrated && (data.seeded || !seed) && status != 'adding') {
+                        status = 'adding';
+                        $('#header_title').text("{{ trans('installer_messages.migrate.adding') }}");
+                        $.ajax({
+                            type: "GET",
+                            url: "/install/add_admin",
+                            async: true,
+                            success: function() {
+                                console.log('Creating admin call succeeded');
+                            }
+                        });
+                    } else if (data.migrated && (data.seeded || !seed) && data.admin_created) {
+                        // implement adding call
                         $('#icon').removeClass('fa-gear fa-spin');
                         $('#icon').addClass('fa-check');
 
                         $('#button').show();
+                        clearInterval(timer);
                     }
                 }
             })
         }
 
-        let timer = setInterval(checkStatus, 5000);
     </script>
 @endsection
 

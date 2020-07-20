@@ -3,7 +3,7 @@
 namespace AbuseIO\AbuseIOInstaller\Controllers;
 
 use AbuseIO\AbuseIOInstaller\Helpers\MigrationManager;
-use http\Env\Request;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
 class MigrationController extends Controller
@@ -26,8 +26,9 @@ class MigrationController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function migrate()
+    public function migrate(Request $request)
     {
+        //return response()->json($request->session()->all());
         $response = $this->migrationManager->startMigration();
 
         return view('vendor.installer.migrate');
@@ -38,7 +39,7 @@ class MigrationController extends Controller
      *
      * @return mixed
      */
-    public function seed()
+    public function seed(Request $request)
     {
         if (isMigrated()) {
             $response = $this->migrationManager->startSeeding();
@@ -59,6 +60,7 @@ class MigrationController extends Controller
         $adminPassword = $request->session()->pull('admin_password', '');
 
         if (isMigrated() && isSeeded()) {
+            $request->session()->put('status', 'adding');
             $response = $this->migrationManager->addAdmin($adminEmail, $adminPassword);
         }
 
@@ -68,9 +70,10 @@ class MigrationController extends Controller
     /**
      * return the status of the installation
      */
-    public function getStatus()
+    public function getStatus(Request $request)
     {
         return response()->json([
+            'current' => $request->session()->pull('status', 'waiting'),
             'migrated' => isMigrated(),
             'seeded' => isSeeded(),
             'admin_created' => adminAdded(),

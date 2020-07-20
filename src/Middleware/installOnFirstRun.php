@@ -22,8 +22,11 @@ class installOnFirstRun
     public function handle($request, Closure $next)
     {
 
+        // if not installed, redirect to /install, if installed redirect to /
         if (!$this->inExceptArray($request) && !isInstalled()) {
             return redirect('/install');
+        } else if ($this->inExceptArray($request) && isInstalled()) {
+            return redirect('/');
         }
 
         return $next($request);

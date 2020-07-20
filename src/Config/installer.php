@@ -33,7 +33,7 @@ return [
             'tokenizer',
             'JSON',
             'cURL',
-            //'mailparse',
+            'mailparse',
 
         ],
         'apache' => [
@@ -85,7 +85,9 @@ return [
                 'mail_username'         => 'sometimes|string|max:50|nullable',
                 'mail_password'         => 'sometimes|string|max:50|nullable',
                 'mail_encryption'       => 'sometimes|string|max:50|nullable',
-                'admin_email'           => 'required|email'
+                'admin_email'           => 'required|email',
+                'admin_password'        => 'required|string|min:6|max:50',
+                'admin_password2'       => 'required|string|min:6|max:50'
             ],
         ],
     ],

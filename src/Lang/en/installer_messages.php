@@ -66,7 +66,7 @@ return [
             'templateTitle' => 'Step 3 | Environment Settings | Guided Wizard',
             'title' => 'Guided <code>.env</code> Wizard',
             'tabs' => [
-                'environment' => 'Environment',
+                'environment' => 'Application',
                 'database' => 'Database',
                 'mail' => 'Mail',
                 'admin' => 'Administrator'
@@ -74,6 +74,7 @@ return [
             'form' => [
                 'name_required' => 'An environment name is required.',
                 'app_name_label' => 'App Name',
+                'demo_data_label' => 'Install demo data',
                 'app_name_placeholder' => 'App Name',
                 'app_environment_label' => 'App Environment',
                 'app_environment_label_local' => 'Local',
@@ -193,9 +194,9 @@ return [
     'migrate' => [
         'title' => 'Migrating',
         'templateTitle' => 'Migrating',
-        'migrating' => 'Migrating...',
-        'seeding' => 'Seeding the database...',
-        'adding' => 'Adding admin account...',
+        'migrating' => 'Migrating',
+        'seeding' => 'Installing the demo data',
+        'adding' => 'Adding admin account',
         'finished' => 'Finished',
     ],
 

@@ -3,8 +3,8 @@
 namespace AbuseIO\AbuseIOInstaller\Controllers;
 
 use Exception;
-use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\MessageBag;
@@ -60,6 +60,7 @@ class EnvironmentController extends Controller
      * @param Request $request
      * @param Redirector $redirect
      * @return \Illuminate\Http\RedirectResponse
+     * @throws Exception
      */
     public function saveWizard(Request $request)
     {
@@ -87,7 +88,9 @@ class EnvironmentController extends Controller
                 ]);
         }
 
-        if ($errors->count() > 0 ) {
+        // check to see if we have errors, ->count() seems broken atm
+        // so do it the old way
+        if (count($errors->all()) > 0 ) {
             return redirect()->back()
                 ->withInput()
                 ->withErrors($errors);
@@ -95,14 +98,12 @@ class EnvironmentController extends Controller
 
         $results = $this->EnvironmentManager->saveFileWizard($request);
 
-        // save admin data in session, so we can use it later
-        $request->session()->put('admin_email', $request->input('admin_email'));
-        $request->session()->put('admin_password', $request->input('admin_password'));
-
-        event(new EnvironmentSaved($request));
-
         return redirect()->route('LaravelInstaller::migrate')
-                        ->with(['results' => $results]);
+            ->with([
+                'seed' => ($request->input('demo_data', 'off') == 'on'),
+                'admin_email' => $request->input('admin_email'),
+                'admin_password' => $request->input('admin_password')
+            ]);
     }
 
     /**
@@ -135,7 +136,8 @@ class EnvironmentController extends Controller
         ]);
 
         try {
-            DB::connection()->getPdo();
+            // do a select, to see if everything works
+            DB::connection()->select('select now()');
             return true;
         } catch (Exception $e) {
             return false;

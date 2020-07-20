@@ -93,20 +93,25 @@ class MigrationManager
     }
 
     /**
-     * Add an administrator
+     * Edit the administrator
      */
     public function addAdmin($email, $password)
     {
+        $email = escapeshellarg($email);
+        $password = escapeshellarg($password);
         $adminFile = storage_path() . '/adminadded';
+
+        Log::debug("email: $email password: $password file: $adminFile");
+
         try{
             Log::debug('Creating admin');
-            // todo
+            call_in_background("user:edit --email=$email --password=$password 1", null, 'touch ' . $adminFile);
         }
         catch(Exception $e){
             return $this->response($e->getMessage(), 'error', null);
         }
 
-        return $this->response('starting seeding', 'success', null);
+        return $this->response('created admin', 'success', null);
     }
 
     /**
